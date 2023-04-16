@@ -1,0 +1,4 @@
+ int finalAsciiValue=(s[i]-'a'+v[i])%26;
+			// this is to make -ve module +ve. 
+            finalAsciiValue=(finalAsciiValue+26)%26;
+            s[i]='a'+finalAsciiValue;
