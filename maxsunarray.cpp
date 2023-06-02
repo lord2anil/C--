@@ -14,7 +14,7 @@ int cur=0;
 for (int i = 0; i < n; i++)
 {
     /* code */cur+=a[i];
-    mx=max(cur,mx);bi
+    mx=max(cur,mx);
     if(cur<0){
         cur=0;
     }
