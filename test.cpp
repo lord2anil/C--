@@ -1,174 +1,74 @@
 #include<bits/stdc++.h>
-#define sz(x) (int)x.size()
-#define rep(i,a,b) for(int i=a;i<b;i++)
-#define repd(i,a,b) for(int i=a;i>=b;i--)
-#define trav(a,x) for(auto &a:x)
-#define fi first
-#define se second
-#define mod 1000000007
-#define mod2 998244353
-#define inf 1e18
-#define eps 1e-9
 using namespace std;
 #define int long long
 template<typename... T>
 void put1(T&&... args) { ((cout << args << " "), ...);}
 template<typename... T>
 void put(T&&... args) { ((cout << args << " "), ...); cout<<'\n';}
+/*----------------------Graph Moves----------------*/
+int dx[4] = {+1, -1, +0, +0};
+int dy[4] = {+0, +0, +1, -1};
+// int dx[8]={+0,+0,+1,-1,-1,+1,-1,+1};   // Kings Move
+// int dy[8]={-1,+1,+0,+0,+1,+1,-1,-1};  // Kings Move
+// int dx[8]={-2, -2, -1, -1,  1,  1,  2,  2};  // Knights Move
+//  int dy[8]={-1,  1, -2,  2, -2,  2, -1,  1}; // Knights Move
+/*------------------------------------------------*/
+const int MOD = 1e9 + 7;
+// unsigned int NO_OF_BITS= sizeof(n) * 8;
+void fuck(){
+int n;
+cin>>n;
+string s;
+cin>>s;
+map<char,vector<int>>mp;
+for (int i = 0; i < n; i++)
+{
+  /* code */mp[s[i]].push_back(i);
+}
+if(n%3==1){
+  put("yes");
+  return ;
+}
 
-
-
-
-class Solution {
-public:
-
-
-
-
-    void solve1(vector<int>&v,vector<int>&pre){
-
-     stack<int>st;
-
-
-     for (int i = v.size()-1; i >=0; i--)
-     {
-        while(!st.empty()||v[i]>=v[st.top()]){
-            st.pop();
-        }
-
-        if(!st.empty()){
-            pre[i]=v[st.top()];
-        }
-           st.push(i);
-
-     }
-    
-    }
-    void solve2(vector<int>&v,vector<int>&pre){
-
-     stack<int>st;
-
-
-     for (int i = 0; i<v.size();i++)
-     {
-        while(!st.empty()||v[i]>=v[st.top()]){
-            st.pop();
-        }
-
-        if(!st.empty()){
-            pre[i]=v[st.top()];
-        }
-           st.push(i);
-
-     }
-    
-    }
-
-
-
-    int maximalRectangle(vector<vector<char>>& matrix) {
-        
-      int n=matrix.size();
-      int m=matrix[0].size();
-
-        vector<vector<int>>mt(n,vector<int>(m,0));
-        for (int i = 0; i < m; i++)
-        { 
-
-             for (int j = n-1; j>=0 ; j--)
-             {
-                /* code */
-             
-             
-              int k =j;
-              int cnt=0;
-              while(k>=0&&matrix[k][i]=='1') {
-                cnt++;
-                k--;
-
-              }
-              mt[j][i]=cnt;
-             }
-             
-        }
-        int ans1=INT_MIN;
-
-        for(auto &heights: mt)
-        {
-           
-
-           
-
-
-      vector<int>next(m,-1);
-      vector<int>pre(m,-1);
-          stack<int>st2;
-        stack<int>st1;st1.push(-1);st2.push(-1);
-
-
-        for (int i = m-1; i>=0; i--)
-        {
-           while(st1.top()!=-1&&heights[i]<=heights[st1.top()]){
-            st1.pop();
-           }
-           next[i]=st1.top();
-           st1.push(i);
-        }
-        
-
-        for (int i = 0; i<m; i++)
-        {
-          while(st2.top()!=-1&&heights[i]<=heights[st2.top()]){
-            st2.pop();
-           }
-           pre[i]=st2.top();
-           st2.push(i);
-        }
-        int ans=0;
-
-        for (int i = 0; i < m; i++)
-        {
-           int p=next[i];
-           if(p==-1) p=m;
-           int b=pre[i];
-           int h=heights[i];
-            ans=max(ans,h*(p-b-1));
-        }
-            
-
-
+ 
+ for(auto &i : mp)
+ { vector<int>v=i.second;
+      int l=0;
+      int r=v.size()-1;
        
 
-        ans1=max(ans1,ans);
-             
 
+        while(v[l]%3!=0) l++;
+
+        while((n-v[r]-1)%3!=0)r--;
+       if(v[l]<v[r]){
+    
+        int x=v[l];
+        int y=n-v[r]-1;
+         if(x%3==0&&y%3==0&&l<r){
+          put("YES");
+          return ;
+         }}
         
-        }
-        
-
-
-
-
 
       
+      put("NO");
+      return ;
+ }
+}
 
-        // for (int i = 0; i < n; i++)
-        // {
-        //     for (int j = 0;j < m; j++)
-        //     {
-        //     cout<<mt[i][j]<<" ";
-        //     }
-        //     cout<<endl;
-            
-        // }
-        
-        return ans1;
-        
-    }
-};
+
 
 
 signed main()
-{ 
-int n;
+{
+ 
+  int T;
+  int t;
+  cin>>T;
+  t = T;
+  while (T--)
+  { fuck(); }
+  // cout<<fixed<<setprecision(10);
+  // cerr<<"Time:"<<1000*((double)clock())/(double)CLOCKS_PER_SEC<<" ms\n";
   return 0;}

@@ -100,7 +100,7 @@ void deletion(Node*& head,int val){
 
 
 
-Node*reverse(Node* &head){
+Node*revers(Node* &head){
 
    Node*prevptr =NULL;
    Node*currptr=head;
@@ -151,8 +151,17 @@ Node*rec(Node*&head){
     return  newhead;
 
 }
+ Node*rever(Node*&head,Node*pre=NULL){
 
+        if(head->next==NULL){
+          head->next=pre;
+          return head;
+        }
+        Node*n=rever(head->next,head);
+        head->next=pre;
 
+        return n;
+   }
 
 int main()
 {
@@ -164,14 +173,16 @@ int main()
    // insert_head(head, 4);
    // deletion(head,3);
    // deleteAthead(head);
-   display(head);
+   // revers(head);
+   display(rever(head));
    // Node*newhead=reverse(head);
    
    // display(newhead);
 
    // find(head, 6);
-   Node*newhead=reversek(head,2);
-   display(newhead);
+   // Node*newhead=reversek(head,2);
+
+   // display(newhead);
 
 
    return 0;

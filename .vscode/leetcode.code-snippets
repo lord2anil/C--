@@ -1,0 +1,28 @@
+{"": {
+	"prefix": "leet",
+	"body": [
+	  "#include<bits/stdc++.h>",
+	  
+		"#define mod 1000000007",
+		"#define mod2 998244353",
+		"#define inf 1e10",
+		"#define eps 1e-9",
+	    "using namespace std;",
+	    "#define int long long",
+	      "template<typename... T>",
+		  "void put1(T&&... args) { ((cout << args << \" \"), ...);}",
+		  "template<typename... T>",
+		  "void put(T&&... args) { ((cout << args << \" \"), ...); cout<<'\\n';}",
+		  "int dx[4] = {+1, -1, +0, +0};",
+		  "int dy[4] = {+0, +0, +1, -1};",
+          "",
+		  "",
+		  "$0",
+
+		  
+
+	 
+	],
+	"description": ""
+  }
+}

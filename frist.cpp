@@ -1,56 +1,48 @@
-#include<bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include<stack>
+
 using namespace std;
-#define int long long
-template<typename... T>
-void put1(T&&... args) { ((cout << args << " "), ...);}
-template<typename... T>
-void put(T&&... args) { ((cout << args << " "), ...); cout<<'\n';}
-class Solution {
-public:
-    int myAtoi(string s) {
-      bool p=1;
-      int n=s.size();
-      string ans="";
-      for (int i = 0; i < s.size(); i++)
-      {
-        if((s[i])==45&&i+1<n&&s[i+1]>=48&&s[i+1]<=57){
-          p=0;
-        }
-        if(s[i]>=48&&s[i]<=57){
-          ans.push_back(s[i]);
-        }
-      }
-      long long sol=0;
-      int x=1;
-      int mul=0;
-      for (int i = 0; i < ans.size(); i++)
-      
-      {
-        while(x&&i==48){
-          i++;
 
-        }
-        x=0;
-        int y=s[i]-'0';
-        sol=sol*mul+y;
-        mul=mul*10;
+void next_higher1(vector<int>& A, vector<int>& next_higher) {
+  int n = A.size();
+  next_higher.resize(n, 0);
 
-
-      
-      }
-      if(!p) sol=-sol;
-
-      if(sol<-(2<<31)) sol=(2<<31);
-      if(sol>(2<<31)-1) sol=(2<<31)-1;
-      return
-
-        
+  stack<int> st;
+  for (int i = 0; i < n; i++) {
+    while (!st.empty() && A[st.top()] < A[i]) {
+      next_higher[st.top()] = i;
+      st.pop();
     }
-};
-signed main()
-{ 
-char c='-';
-put((2>>31));
+    st.push(i);
+  }
+}
 
+void next_lower1(vector<int>& A, vector<int>& next_lower) {
+  int n = A.size();
+  next_lower.resize(n, 0);
 
-  return 0;}
+  stack<int> st;
+  for (int i = 0; i < n; i++) {
+    while (!st.empty() && -A[st.top()] <A[i]) {
+      next_lower[st.top()] = i;
+      st.pop();
+    }
+    st.push(i);
+  }
+}
+
+int main() {
+  vector<int> A = {4, 5, 2, 25};
+  vector<int> next_higher, next_lower;
+
+  next_higher1(A, next_higher);
+  next_lower1(A, next_lower);
+
+  for (int i = 0; i < A.size(); i++) {
+    cout << "Next higher for " << A[i] << " is " << next_higher[i] << endl;
+    cout << "Next lower for " << A[i] << " is " << next_lower[i] << endl;
+  }
+
+  return 0;
+}

@@ -26,16 +26,14 @@ int main(){
     }
 
     vector<int> dis(n+1,inf);
-    // int source;
-    // cin>>source;
+  
     dis[1]=0;
     set<pair<int,int>>s;
     s.insert({0,1});
     
     while(!s.empty()){
         auto x=*(s.begin());
-        // int curr= x.second;
-        // int curr_d=x.first;
+       
         s.erase(x);
         for(auto i: adj[x.second]){
             if(i.second + dis[x.second]<dis[i.first]){
