@@ -1,72 +1,83 @@
-#include"bits/stdc++.h"
+#include<bits/stdc++.h>
+#define sz(x) (int)x.size()
+#define rep(i,a,b) for(int i=a;i<b;i++)
+#define repd(i,a,b) for(int i=a;i>=b;i--)
+#define trav(a,x) for(auto &a:x)
+#define fi first
+#define se second
+#define mod 1000000007
+#define mod2 998244353
+#define inf 1e18
+#define eps 1e-9
 using namespace std;
-#define int long long 
-bool issub(vector<int> a, vector<int> b){
-    int n = a.size(), m = b.size();
-    int i = 0, j = 0;
-    while(i<n and j <m){
-        if(a[i] == b[j]){
-            i++;
-            j++;
-            if(j == m){
-                return true;
+#define int long long
+template<typename... T>
+void put1(T&&... args) { ((cout << args << " "), ...);}
+template<typename... T>
+void put(T&&... args) { ((cout << args << " "), ...); cout<<'\n';}
+int dx[4] = {+1, -1, +0, +0};
+int dy[4] = {+0, +0, +1, -1};
+int maxWeight;
+int n;
+vector<int>wt;
+int lim;
+ vector<vector<int>>dp;
+int solve(int mask,int curr){
+
+  
+   if(mask==lim){
+    return 1;
+   }
+
+   if(dp[mask][curr]!=-1){
+    return dp[mask][curr];
+
+   }
+
+   if(curr==maxWeight){
+    return 1+solve(mask,0);
+   }
+    // bool p=1;
+    int ans=INT_MAX;
+
+    for (int i = 0; i < n; i++)
+    {
+        if((mask&(1<<i))==0){
+            // p=0;
+            if(curr+wt[i]<=maxWeight){
+
+                ans=min(ans,solve(mask|(1<<i),curr+wt[i]));
+
+
             }
-        }
-        else{
-            i = i - j + 1;
-            j = 0;
+
         }
     }
-    return false;
+    
+    if(ans==INT_MAX){
+        ans=solve(mask,0)+1;
+    }
+
+    return dp[mask][curr]= ans;
 }
 
-void solve(int t)
-{
-    cout << "Case #" << t << ": ";
-    int n,k;
-    cin >> n >> k;
-    vector<int> a(n), b(n);
-    for(int i=0; i<n; i++){
-        cin >> a[i];
-    }
-    for(int i=0; i<n; i++){
-        cin >> b[i];
-    }
-    if(a == b){
-        if(k%2==0) cout << "YES" << '\n';
-        else cout << "NO" << '\n';
-        return;
-    }
-    if(n == 2){
-        if(k%2) cout << "YES" << '\n';
-        else cout << "NO" << '\n';
-        return;
-    }
-    for(int i=0; i<n; i++){
-        a.push_back(a[i]);
-    }
-    if(issub(a,b) and k > 0) cout << "YES" << '\n';
-    else cout << "NO" << '\n';
-}
+
 signed main()
-{
-// #ifndef ONLINE_JUDGE
- 
-//     // For getting input from input.txt file
-//     freopen("input.txt", "r", stdin);
- 
-//     // Printing the Output to output.txt file
-//     freopen("output.txt", "w", stdout);
- 
-// #endif
-    // ios_base::sync_with_stdio(false);
-    // cin.tie(0);
+{ 
+int n1,m;
+cin>>n1>>m;
+n=n1;
+maxWeight=m;
+lim=(1<<n)-1;
+int x;
+while(cin>>x)
+{ wt.push_back(x);}
 
-    int t;
-    cin >> t;
-    for(int i=1; i<t+1; i++){
-        solve(i);
-    }
+  dp.resize((1<<(n+1)),vector<int>(maxWeight+1,-1));
 
-    return 0;
-}
+
+put(solve(0,0));
+
+
+
+  return 0;}

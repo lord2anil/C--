@@ -74,7 +74,7 @@ int main(){
         adj[y].push_back(x);
     };
     dfs(1,1,0);
-    cout<<lca(2,3);
+    cout<<lca(1,2);
     // for (int i = 1; i <=4; i++)
     // {
     //     /* code */cout<<par[i];

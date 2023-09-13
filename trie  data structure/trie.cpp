@@ -1,104 +1,115 @@
 #include<bits/stdc++.h>
+using namespace std;
 
-using namespace std;
-#include <vector>
-#include <array>
-using namespace std;
-using std ::max;
-using std ::min;
-#include <set>
-using std::pair;
-using std::array;
-#include <algorithm>
-#include <functional>
-#define ll long long int
-#define alpha_size 26
-struct TrieNode{
-    // TrieNode*root;
+
+
+
+class TrieNode{
     public:
+
     char data;
-    TrieNode*children[26];
-    bool isterminal;
-
-
-    TrieNode(char x){
+    TrieNode* children[26];
+    bool is_terminal;
+    TrieNode(char x='\0'){
         data=x;
-        for (int i = 0; i < 26; i++)
-        {
-            /* code */children[i]=NULL;
-            
-        }
-        isterminal=0;
-        
+    is_terminal=false;
+    for (int i = 0; i < 26; i++)
+    {
+        children[i]=NULL;
     }
+         
+    }
+
 };
 
-struct trie
-{
+class Trie{
     public:
-     TrieNode *root;   
-    trie() {
-        root= new TrieNode('\0');
+
+    TrieNode*root;
+    Trie(){
+       root= new TrieNode();
     }
 
 
-void insert1(TrieNode*root,string word){
-    if(word.size()==0){
-        root->isterminal=1;
-        return;
+    void insertUtils(TrieNode*root,string s){
+
+        if(s==""){
+            root->is_terminal=1;
+            return;
+        }
+         int x=s[0]-'a';
+         TrieNode*temp=root;
+        if(root->children[x]!=NULL){
+            temp=temp->children[x];
+
+        }else{
+            TrieNode *n=new TrieNode(s[0]);
+            temp->children[x]=n;
+            temp=temp->children[x];
+            
+        
+        }
+
+        insertUtils(temp,s.substr(1));
     }
 
-    TrieNode*temp=root;
-
-int index=word[0]-'A';
-if(root->children[index]!=NULL){
-    temp=temp->children[index];
-}else{
-    TrieNode*x=new TrieNode(word[0]);
-    temp->children[index]=x;
-
-
-
-}
-insert1(temp,word.substr(1));
-
-}
-
-
-bool  search2(TrieNode*root,string word)
-{
-    if(word.size()==0){
-        return root->isterminal;
+    void insert(string s){
+        insertUtils(root,s);
     }
+    bool searchUtils(TrieNode*root,string s){
 
-    int index=word[0]-'A';
-TrieNode*chid;
-    if(root->children[index]!=NULL){
-       chid=root->children[index];
-    }else{
-        return 0;
+        if(s==""){
+            return root->is_terminal;
+        }
+          int x=s[0]-'a';
+         TrieNode*temp=root;
+        if(root->children[x]!=NULL){
+            temp=temp->children[x];
+
+        }else{
+           return 0;
+        }
+
+        return searchUtils(temp,s.substr(1));
+
+
     }
-    return search2(chid,word.substr(1));
+    bool search(string s){
+       return searchUtils(root,s);
 
-}
+    }
+    void removeUtils(TrieNode*root,string s){
 
-void insert(string s){
-    insert1(root,s);
-}
-bool search(string s){
-   return search2(root,s);
-}
+        if(s==""){
+            root->is_terminal=0;
+        }
+          int x=s[0]-'a';
+         TrieNode*temp=root;
+        if(root->children[x]!=NULL){
+            temp=temp->children[x];
+
+        }else{
+           return ;
+        }
+
+        return removeUtils(temp,s.substr(1));
+
+
+    }
+    void remove(string s){
+       return removeUtils(root,s);
+
+    }
 
 
 
 };
-int main(){
 
-    trie*root=new trie();
-root->insert("anil");
+signed main()
+{ 
+Trie*root=new Trie();
+root->insert("anill");
+
 cout<<root->search("anil");
 
-
-
-return 0;
-}
+  return 0;}

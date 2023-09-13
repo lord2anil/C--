@@ -1,15 +1,31 @@
-import csv
+# % Parameters
+L = 0.04;              % Length of the fin (meters)
+P = 0.404;             % Perimeter of the fin (meters)
+Ac = 0.0004;           % Cross-sectional area of the fin (square meters)
+Tb = 225;              % Base temperature (°C)
+T_inf = 25;            % Ambient temperature (°C)
+k = 45;                % Thermal conductivity (W/m·K)
+h = 15;                % Convective heat transfer coefficient (W/m^2·K)
+dx = 0.005;            % Grid spacing (0.5 cm = 0.005 m)
 
-# Example data
-my_list = [['2020-06-20 10:00:00.000', 'player1', 100],
-           ['2020-06-20 10:00:10.000', 'player3', 100],
-           ['2020-06-20 10:00:20.000', 'player2', 100],
-           ['2020-06-20 10:00:30.000', 'player4', 100]]
+% Calculate the number of grid points
+N = L / dx;
 
-# Write data to CSV file
-with open('my_csv_file.csv', 'w', newline='') as csvfile:
-    writer = csv.writer(csvfile)
-    for row in my_list:
-        writer.writerow(row)
+% Initialize temperature distribution array
+T = zeros(N+1, 1);
 
-print("CSV file created successfully.")
+% Set boundary conditions
+T(1) = Tb;
+T(N+1) = Tb;
+
+% Iterate to solve for temperature distribution
+for i = 2:N
+    T(i) = T(i-1) + (h * P * dx / (k * Ac)) * (T_inf - T(i-1));
+end
+
+% Display the temperature distribution
+x = 0:dx:L;
+fprintf('Distance from base (m)\tTemperature (°C)\n');
+for i = 1:N+1
+    fprintf('%.4f\t%.3f\n', x(i), T(i));
+end
