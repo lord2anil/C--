@@ -1,87 +1,255 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/trie_policy.hpp>
-using namespace __gnu_pbds;
-template<class T> using oset =tree<T, null_type, less<T>, rb_tree_tag,tree_order_statistics_node_update> ;
-//oset<int>s:s.find_by_order(k):Kth element in "s",s.order_of_key(k):Number of item strictly lessthan k
-#define sz(x) (int)x.size()
-#define rep(i, a, b) for (int i = a; i < b; i++)
-#define repd(i, a, b) for (int i = a; i >= b; i--)
-#define trav(a, x) for (auto &a : x)
-#define fi first
-#define se second
-#define mod 1000000007
-#define mod2 998244353
-#define inf 1e18
-#define eps 1e-9
-
 #define int long long
+// #include <ext/pb_ds/assoc_container.hpp>
+// #include <ext/pb_ds/trie_policy.hpp>
+// using namespace __gnu_pbds;
+// template<class T> using oset =tree<T, null_type, less<T>, rb_tree_tag,tree_order_statistics_node_update> ;
+// /* oset<int>s:s.find_by_order(k):Kth element in
+// ,s.order_of_key(k):Number of item strictly lessthan k */
 template <typename... T>
 void put1(T &&...args) { ((cout << args << " "), ...); }
 template <typename... T>
 void put(T &&...args)
 {
-    ((cout << args << " "), ...);
-    cout << '\n';
+  ((cout << args << " "), ...);
+  cout << '\n';
 }
+/*----------------------Graph Moves----------------*/
 int dx[4] = {+1, -1, +0, +0};
 int dy[4] = {+0, +0, +1, -1};
-vector<int> ct;
-vector<int> pt;
+// int dx[8]={+0,+0,+1,-1,-1,+1,-1,+1};   // Kings Move
+// int dy[8]={-1,+1,+0,+0,+1,+1,-1,-1};  // Kings Move
+// int dx[8]={-2, -2, -1, -1,  1,  1,  2,  2};  // Knights Move
+//  int dy[8]={-1,  1, -2,  2, -2,  2, -1,  1}; // Knights Move
+/*------------------------------------------------*/
+const int MOD = 1e9 + 7;
+// unsigned int NO_OF_BITS= sizeof(n) * 8;
 
-vector<vector<int>> v;
-vector<vector<int>> ft;
-
-
-signed main()
+int count(int x)
 {
-    int n;
-    cin >> n;
-    pt.resize(n, 0);
-    ct.resize(n, 0);
-    for (int i = 0; i < n; i++)
-    {
-        int a, b;
-        cin >> a >> b;
-        v.push_back({a, b});
-        ft.push_back({a, b, i});
-    }
-    oset<pair<int,int>>st,st1;
-    sort(ft.begin(), ft.end(),[&](vector<int>v1,vector<int>v2){
-        if(v1[0]==v2[0]){
-            return v1[1]>v2[1];
-        } return v1[0]<v2[0];
-    });
-    // for(auto &i : ft)
-    // {
-    //   put1(i[0],i[1],i[2]);
-    //   cout<<endl;
-    // }
-    for (int i = n-1; i >=0; i--)
-    {
-        ct[ft[i][2]]=st.order_of_key({ft[i][1]+1,-1});
-        st.insert({ft[i][1],i});
-    }
-    for (int i = 0; i<n; i++)
-    {
-        pt[ft[i][2]]=i-st1.order_of_key({ft[i][1],-1});
-        st1.insert({ft[i][1],i});
-    }
+  int ans = 0;
+  while (x > 0)
+  {
+    ans++;
+    x = x / 10;
+  }
+  return ans;
+}
+int pow1(int x, int n)
+{
+  if (n == 0)
+  {
+    return 1;
+  }
+  if (n == 1)
+  {
+    return x;
+  }
+
+  if (n % 2 == 0)
+  {
+
+    int t = pow1(x, n / 2);
+    return t * t;
+  }
+  else
+  {
+    int t = pow1(x, n / 2);
+    return x * t * t;
+  }
+}
+
+vector<vector<int>>dp;
+
+int solve(string num, int i, char d, int pre)
+{
+  
+
+  if(i==num.size()){
+    return 1;
+  }
+
+  if(dp[i][pre+1]!=-1){
+    return dp[i][pre+1];
+  }
+
+  int ans = 0;
+  if (pre ==-1)
+  {
     
-
-   
-
-    for (auto &i : ct)
+    for (char j = '1'; j <= min(num[i], d); j++)
     {
-        put1((i>0));
-    }
-    cout << endl;
+      // cout<<"sda";
+      if(j==num[i]){
+        ans+=solve(num, i + 1, d, 1);
 
-    for (auto &i : pt)
+      }else {
+      ans = ans + solve(num, i + 1, d, 0);}
+    }
+  }
+  else
+  {
+
+    char lim;
+    if (pre==1)
     {
-        put1((i>0));
+      
+      for (char j = '0'; j <= min(num[i], d); j++)
+    {
+      if(j==num[i]){
+       
+        ans+=solve(num, i + 1, d, 1);
+
+
+      }else {
+      ans = ans + solve(num, i + 1, d,0);}
+    }
+    }
+    else
+    {
+     
+        for (char j = '0'; j <=d; j++)
+    {
+      ans = ans + solve(num, i + 1, d, 0);
+    }
+    }
+  
+  }
+
+  return dp[i][pre+1]=ans;
+}
+
+void fuck()
+{
+  int n, d, s;
+  cin >> n >> d >> s;
+  // cout<<(count(10));
+  int nt = count(n);
+  int st = count(s);
+  // cout<<nt<<"  "<<st<<endl;
+
+  int nx = n;
+  vector<int> v;
+  int last = 0;
+  int cnt = st;
+  int sd = 1;
+  while (nx > 0)
+  {
+    v.push_back(nx % 10);
+
+    if (cnt > 0)
+    {
+
+      last += (nx % 10) * sd;
+      sd = sd * 10;
+    }
+    cnt--;
+    nx = nx / 10;
+  }
+  // cout<<last<<endl;
+
+  int ans = 0;
+
+  if (last >= s)
+  {
+    
+    string num = to_string(n);
+    string suff = to_string(s);
+    num = num.substr(0, num.size() - suff.size());
+
+    char dx=d+'0';
+    dp.clear();
+    dp.resize(num.size()+3,vector<int>(3,-1));
+    // cout<<num<<endl;
+    ans+=solve(num,0,dx,-1);
+
+    
+  }else{
+    string num = to_string(n);
+    string suff = to_string(s);
+    num = num.substr(0, num.size() - suff.size());
+    int sz=num.size();
+   bool x=0;
+    // for (int i = sz-1; i >=0; i--)
+    // {
+    //   if(num[i]-'0'>0){
+
+    //     num[i]--;
+    //     x=1;
+    //     break;
+
+
+    //   }
+    // } 
+    // cout<<num<<endl; 
+    if(sz>0){
+    if(num[sz-1]=='0'){
+      if(sz>=2){
+        x=1;
+      }
+      num[sz-1]='9';
+       num[sz-2]--;
+       
+    } else{
+
+      num[sz-1]--;
+      x=1;
+
+    }}
+    // cout<<num<<endl;
+   if(x) {
+     char dx=d+'0';
+    dp.clear();
+    dp.resize(num.size()+3,vector<int>(3,-1));
+    // cout<<num<<endl;
+    ans+=solve(num,0,dx,-1);
     }
 
-    return 0;
+
+  }
+  // cout << ans << endl;
+  // ans=0;
+  // put(ans+3799730222500643);
+  // cout<<nt<<st<<endl;
+  int remDigit=nt-st-1;
+
+  for (int i = 1; i <= nt - 1; i++)
+  {
+    if (i - st > 0)
+    {
+
+      int x = i - st;
+      // cout<<x<<endl;
+      
+      int y=pow1(d+1,x-1);
+      y = y * d;
+      ans += y;
+      // cout<<ans<<endl;
+    }
+    if (i - st == 0)
+    {
+      ans++;
+    }
+  }
+  cout << ans << endl;
+}
+signed main()
+{ // ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+  // #ifndef ONLINE_JUDGE
+  // freopen("input.txt","r", stdin);
+  // freopen("output.txt","w", stdout);
+  // #endif
+  int T;
+  int t;
+  cin >> T;
+  // t = T;
+  while (T--)
+  {
+
+    fuck();
+  }
+  // cout<<fixed<<setprecision(10);
+  // cerr<<"Time:"<<1000*((double)clock())/(double)CLOCKS_PER_SEC<<" ms\n";
+  return 0;
 }

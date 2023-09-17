@@ -1,83 +1,134 @@
 #include<bits/stdc++.h>
-#define sz(x) (int)x.size()
-#define rep(i,a,b) for(int i=a;i<b;i++)
-#define repd(i,a,b) for(int i=a;i>=b;i--)
-#define trav(a,x) for(auto &a:x)
-#define fi first
-#define se second
-#define mod 1000000007
-#define mod2 998244353
-#define inf 1e18
-#define eps 1e-9
 using namespace std;
 #define int long long
-template<typename... T>
-void put1(T&&... args) { ((cout << args << " "), ...);}
-template<typename... T>
-void put(T&&... args) { ((cout << args << " "), ...); cout<<'\n';}
+
+
+/*----------------------Graph Moves----------------*/
 int dx[4] = {+1, -1, +0, +0};
 int dy[4] = {+0, +0, +1, -1};
-int maxWeight;
-int n;
-vector<int>wt;
-int lim;
- vector<vector<int>>dp;
-int solve(int mask,int curr){
-
-  
-   if(mask==lim){
-    return 1;
-   }
-
-   if(dp[mask][curr]!=-1){
-    return dp[mask][curr];
-
-   }
-
-   if(curr==maxWeight){
-    return 1+solve(mask,0);
-   }
-    // bool p=1;
-    int ans=INT_MAX;
-
-    for (int i = 0; i < n; i++)
-    {
-        if((mask&(1<<i))==0){
-            // p=0;
-            if(curr+wt[i]<=maxWeight){
-
-                ans=min(ans,solve(mask|(1<<i),curr+wt[i]));
+// int dx[8]={+0,+0,+1,-1,-1,+1,-1,+1};   // Kings Move
+// int dy[8]={-1,+1,+0,+0,+1,+1,-1,-1};  // Kings Move
+// int dx[8]={-2, -2, -1, -1,  1,  1,  2,  2};  // Knights Move
+//  int dy[8]={-1,  1, -2,  2, -2,  2, -1,  1}; // Knights Move
+/*------------------------------------------------*/
+const int MOD = 1e9 + 7;
+// unsigned int NO_OF_BITS= sizeof(n) * 8;
 
 
-            }
 
-        }
+int count(int x){
+  int ans=0;
+  while(x>0){
+    ans++;
+    x=x/10;
+
+  }
+  return ans;
+}
+int pow1(int x,int n){
+    if(n==0){
+        return 1;
+    }
+    if(n==1){
+        return x;
     }
     
-    if(ans==INT_MAX){
-        ans=solve(mask,0)+1;
-    }
-
-    return dp[mask][curr]= ans;
+     if(n%2==0){
+         
+        int t=pow1(x,n/2);
+         return t*t;
+     }else{
+         int t=pow1(x,n/2);
+         return x*t*t;
+     }
+    
+    
 }
 
+void fuck(){
+int n,d,s;
+cin>>n>>d>>s;
+// cout<<(count(10));
+    int nt=count(n);
+    int st=count(s);
+    // cout<<nt<<"  "<<st<<endl;
+    
+    
+    int nx=n;
+    vector<int>v;
+    int last=0;
+    int cnt= st;
+    int sd=1;
+    while(nx>0){
+        v.push_back(nx%10);
+        
+        if(cnt>0){
+            
+        last+=(nx%10)*sd;
+        sd=sd*10;}
+        cnt--;
+        nx=nx/10;
+    }
+    // cout<<last<<endl;
+    // put(last,st);
+  
+    int ans=0;
+    
+    if(last>=s){
+    int ans2=1;
+    int sz=v.size();
+    
+    for(int i=st;i<sz;i++){
+        int y=0;
+        if(i==sz-1){
+                    y=min(d,v[i]);
+        }else{
 
+        y=min(d+1,v[i]+1);}
+        ans2=ans2*y;
+        
+    }
+    ans+=ans2;
+    }
+    // cout<<ans<<endl;
+    // cout<<nt<<st<<endl;
+    
+    
+    for(int i=1;i<=nt-1;i++){
+        if(i-st>0){
+            
+            int x=i-st;
+            // cout<<x<<endl;
+            
+            int y=1;
+            if(x-1>=0){
+            y=pow1(d+1,x-1);}
+            y=y*d;
+            ans+=y;
+            // cout<<ans<<endl;
+        }
+        if(i-st==0){
+            ans++;
+        }
+    }
+    cout<<ans<<endl;
+
+}
 signed main()
-{ 
-int n1,m;
-cin>>n1>>m;
-n=n1;
-maxWeight=m;
-lim=(1<<n)-1;
-int x;
-while(cin>>x)
-{ wt.push_back(x);}
-
-  dp.resize((1<<(n+1)),vector<int>(maxWeight+1,-1));
-
-
-put(solve(0,0));
-
-
-
+{// ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+  // #ifndef ONLINE_JUDGE
+  //freopen("input.txt","r", stdin);
+  //freopen("output.txt","w", stdout);
+  // #endif
+  int T;
+  // int t;
+  cin>>T;
+  // t = T;
+  while (T--)
+  {
+     
+      
+      fuck(); }
+  // cout<<fixed<<setprecision(10);
+  // cerr<<"Time:"<<1000*((double)clock())/(double)CLOCKS_PER_SEC<<" ms\n";
   return 0;}
