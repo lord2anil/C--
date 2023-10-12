@@ -30,20 +30,13 @@ void dfs1(int v){
 
     
 }
-
-
 void dfs(int v){
-
-    vis[v]=1;
+     vis[v]=1;
     for (auto i : tr[v])
     {if(vis[i]==0){
         dfs(i);}
     }
     ssc.push_back(v);
-    
-
-
-
 }
 int main(){
     int n,m;

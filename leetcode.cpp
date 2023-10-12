@@ -18,18 +18,8 @@ template<typename... T>
 void put(T&&... args) { ((cout << args << " "), ...); cout<<'\n';}
 int dx[4] = {+1, -1, +0, +0};
 int dy[4] = {+0, +0, +1, -1};
-
-
-class Trie{
-
-}
-
-
-
-
-
 signed main()
 { 
 int n;
-
+cout<<INT_MAX<<endl;
   return 0;}
