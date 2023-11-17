@@ -18,6 +18,12 @@ void put(T&&... args) { ((cout << args << " "), ...); cout<<'\n';}
 int dx[4] = {+1, -1, +0, +0};
 int dy[4] = {+0, +0, +1, -1};
 
+    int inv(int a,int mod) {
+  return a <= 1 ? a : mod - (long long)(mod/a) * inv(mod % a,mod) % mod;
+}
+
+
+
 
 void rolling_hash(string pat, string text){
     int m=pat.size();
@@ -31,22 +37,27 @@ void rolling_hash(string pat, string text){
        power[i]=(power[i-1]*base)%mod;
     }
     vector<long long>hs(n+1,0);
-    for (int i = 0; i < n; i++)
+    hs[0]=((text[0]-'a'+1));
+    for (int i = 1; i < n; i++)
     {
-        hs[i+1]=(hs[i]*base+((text[i]-'a'+1)))%mod;
+        hs[i]=(hs[i-1]+((text[i]-'a'+1))*power[i])%mod;
     }
     long long h1=0;
 
     for (int i = 0; i < m; i++)
     {
-        h1=(h1*base+(pat[i]-'a'+1))%mod;
+        h1=(h1+(pat[i]-'a'+1)*power[i])%mod;
     }
-
-    for (int i = 0; i+m-1 < n; i++)
+    
+    for (int i = m-1; i< n; i++)
     {
-        // long long curr=(hs[i+m]-hs[i]+mod)%mod;
-        long long curr=(hs[i+m]-(hs[i]*power[m])%mod+mod)%mod;
-        
+        long long curr=0;
+        if(i-m==0){
+            curr=hs[i];
+        }else{
+          curr= (hs[i]-hs[i-m]+mod)%mod;
+         curr=(curr*inv(power[i-m+1],mod))%mod;
+         }
         if(curr==h1){
             cout<<"mil gya->"<<i<<endl;
         }
@@ -62,7 +73,7 @@ void rolling_hash(string pat, string text){
 signed main()
 { 
 string s="anil";
-string text="anilanilanil";
+string text="anielanilanil";
 rolling_hash(s,text);
 
   return 0;}

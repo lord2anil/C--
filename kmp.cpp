@@ -24,9 +24,6 @@ vector<int> prefix(string s){
 
 
 
-
-
-
 signed main()
 { 
     string s="an";

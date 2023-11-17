@@ -1,46 +1,24 @@
-/**
- * @param {number[]} stoneValue
- * @return {number}
- */
 
 
-const solve=(sto,pre,n,l,r){
 
-    if(l==r){
-        return 0;
-    }
+const solve=(nums,i,n,pr){
+ if(i==n){
+  return pr;
+ }
 
+  let ans=-1e16;
+  ans=Math.max(ans,Math.max(pr,solve(nums,i+1,n,nums[i])));
+  ans=Math.max(ans,solve(solve(nums,i+1,n,pr*nums[i])));
+  return ans;
 
-    int ans=-1;
-
-    for (let i = l; i <r; i++) {
-       let left=pre[i]-(l==0)?0:pre[l-1];
-       let right=pre[r]-pre[i];
-       if(left>right){
-        ans=max(ans,solve(sto,pre,n,i+1,r)+right);
-       }
-       if(left<right){
-        ans=max(ans,solve(sto,pre,n,l,i)+left);
-       }
-       if(left==right){
-        ans=max(ans,solve(sto,pre,n,l,i)+left);
-        ans=max(ans,solve(sto,pre,n,i+1,r)+right);
-
-       }
-
-       return ans;
-      
-        
-    }
 }
 
-var stoneGameV = function(sto) {
-    let n=sto.length();
-    const pre=[];
-  
-  pre[0]=sto[0];
-  for (let i = 1; i < n; i++) {
-    pre[i]=pre[i-1]+sto[i];
-  }
-  return solve(sto,pre,n,0,n-1);
+var maxProduct = function(nums) {
+
+
+
+  return solve(nums,nums.length,1);
+    
 };
+
+

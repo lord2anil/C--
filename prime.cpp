@@ -22,5 +22,21 @@ signed main()
 { 
 int n;
 cin>>n;
-put(char(tolower('A')));
+vector<int>prime;
+
+for (int i = 2; i*i<=n; i++)
+{
+    while(n%i==0){
+        prime.push_back(i);
+        n=n/i;
+    }
+    
+}
+if(n>1){
+    prime.push_back(n);
+}
+for(auto &i : prime)
+{
+put(i);
+}
   return 0;}
