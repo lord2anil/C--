@@ -1,0 +1,1 @@
+{"name":"Local: test","url":"c:\\Users\\HP\\OneDrive\\F\\C++\\test.cpp","tests":[{"id":1658989640865,"input":"AABABBA\n1","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\HP\\OneDrive\\F\\C++\\test.cpp","group":"local","local":true}

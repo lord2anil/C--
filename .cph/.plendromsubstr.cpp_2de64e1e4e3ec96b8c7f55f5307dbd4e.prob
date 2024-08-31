@@ -1,0 +1,1 @@
+{"name":"Local: plendromsubstr","url":"d:\\F\\C++\\plendromsubstr.cpp","tests":[{"id":1658399457393,"input":"5\n1 2 2 3 3","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\F\\C++\\plendromsubstr.cpp","group":"local","local":true}
