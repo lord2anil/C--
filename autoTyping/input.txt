@@ -1,0 +1,62 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define int long long
+#define endl "\n",
+#define yes put("YES");
+#define no put("NO");
+#define ini(v) (v).begin(), (v).end()
+#define GET_MACRO(_1, _2, _3,_4, NAME, ...) NAME
+#define FOR1(len,itr) for (int itr = 0; itr < (len); ++itr)
+#define FOR2(len,itr, var) for (int itr = var; itr < (len); ++itr)
+#define FOR3(len,itr, var, step) for (int itr = var; itr < (len); itr += (step))
+#define FOR(...) GET_MACRO(__VA_ARGS__, FOR3, FOR2, FOR1)(__VA_ARGS__)
+#define print(v) for(auto &i : v){put1(i);} cout<<endl;
+//#include <ext/pb_ds/assoc_container.hpp>
+//#include <ext/pb_ds/trie_policy.hpp>
+//using namespace __gnu_pbds;
+//template<class T> using oset =tree<T, null_type, less<T>, rb_tree_tag,tree_order_statistics_node_update> ;
+/* oset<int>s:s.find_by_order(k):Kth element in "s",s.order_of_key(k):Number of item strictly lessthan k */
+template<typename... T>
+void put1(T&&... args) { ((cout << args << " "), ...);}
+template<typename... T>
+void put(T&&... args) { ((c#include<bits/stdc++.h>
+using namespace std;
+#define int long long
+#define endl "\n",
+#define yes put("YES");
+#define no put("NO");
+#define ini(v) (v).begin(), (v).end()
+#define GET_MACRO(_1, _2, _3,_4, NAME, ...) NAME
+#define FOR1(len,itr) for (int itr = 0; itr < (len); ++itr)
+#define FOR2(len,itr, var) for (int itr = var; itr < (len); ++itr)
+#define FOR3(len,itr, var, step) for (int itr = var; itr < (len); itr += (step))
+#define FOR(...) GET_MACRO(__VA_ARGS__, FOR3, FOR2, FOR1)(__VA_ARGS__)
+#define print(v) for(auto &i : v){put1(i);} cout<<endl;
+//#include <ext/pb_ds/assoc_container.hpp>
+//#include <ext/pb_ds/trie_policy.hpp>
+//#include <ext/pb_ds/trie_policy.hpp>
+//using namespace __gnu_pbds;
+//template<class T> using oset =tree<T, null_type, less<T>, rb_tree_tag,tree_order_statistics_node_update> ;
+/* oset<int>s:s.find_by_order(k):Kth element in "s",s.order_of_key(k):Number of item strictly lessthan k */
+template<typename... T>
+void put1(T&&... args) { ((cout << args << " "), ...);}
+template<typename... T>
+void put(T&&... args) { ((cout << args << " "), ...); cout<<'\n';}
+/*----------------------Graph Moves----------------*/
+int dx[4] = {+1, -1, +0, +0};
+int dy[4] = {+0, +0, +1, -1};
+// int dx[8]={+0,+0,+1,-1,-1,+1,-1,+1};   // Kings Move
+// int dy[8]={-1,+1,+0,+0,+1,+1,-1,-1};  // Kings Move
+// int dx[8]={-2, -2, -1,out << args << " "), ...); cout<<'\n';}
+/*----------------------Graph Moves----------------*/
+int dx[4] = {+1, -1, +0, +0};
+int dy[4] = {+0, +0, +1, -1};
+// int dx[8]={+0,+0,+1,-1,-1,+1,-1,+1};   // Kings Move
+// int dy[8]={-1,+1,+0,+0,+1,+1,-1,-1};  // Kings Move
+// int dx[8]={-2, -2, -1, -1,  1,  1,  2,  2};  // Knights Move
+//  int dy[8]={-1,  1, -2,  2, -2,  2, -1,  1}; // Knights Move
+/*------------------------------------------------*/
+//Functions
+vector<int>input(int n){vector<int>v;for (int i = 0; i < n; i++){int x;cin>>x;v.push_back(x);} return v; }
+const int mod= 1e9 + 7;
+/*/
